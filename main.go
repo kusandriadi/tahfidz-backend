@@ -1,12 +1,16 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"tahfidz-backend/auth"
+	"tahfidz-backend/handler"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	router := gin.Default()
+
+	handler.ConnectToDatabse()
 
 	router.GET("/up", func(context *gin.Context) {
 		context.String(200, "Tahfidz backend is online")
@@ -14,5 +18,5 @@ func main() {
 
 	router.POST("/api/auth", auth.Login)
 
-	router.Run()
+	router.Run(":8088")
 }
