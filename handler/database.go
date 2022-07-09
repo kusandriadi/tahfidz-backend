@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"log"
 
 	"gorm.io/driver/mysql"
@@ -9,11 +8,11 @@ import (
 )
 
 func ConnectToDatabse() {
-	dsn := "root:@tcp(27.112.79.164:3306)/tahfidz?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:password@tcp(103.189.234.120:3306)/tunasmulia"
 	_, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal("DB Connection Error")
+		log.Fatal("DB Connection Error " + err.Error())
 	}
 
-	fmt.Println("DB Connection succeeded")
+	log.Println("DB Connection succeeded")
 }
