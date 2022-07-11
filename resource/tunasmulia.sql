@@ -1,5 +1,7 @@
 CREATE TABLE IF NOT EXISTS user (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    createdDate DATE,
+    markForDelete BOOLEAN default false,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(100),
     password VARCHAR(75),
@@ -14,6 +16,8 @@ CREATE TABLE IF NOT EXISTS user (
 
 CREATE TABLE IF NOT EXISTS subject (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    createdDate DATE,
+    markForDelete BOOLEAN default false,
     name VARCHAR(255) NOT NULL,
     book VARCHAR(255),
     author VARCHAR(255),

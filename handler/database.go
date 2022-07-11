@@ -7,12 +7,14 @@ import (
 	"gorm.io/gorm"
 )
 
-func ConnectToDatabse() {
+func ConnectToDatabase() *gorm.DB {
 	dsn := "root:password@tcp(103.189.234.120:3306)/tunasmulia"
-	_, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("DB Connection Error " + err.Error())
 	}
 
 	log.Println("DB Connection succeeded")
+
+	return db
 }
