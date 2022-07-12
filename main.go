@@ -1,17 +1,20 @@
 package main
 
 import (
+	"github.com/sirupsen/logrus"
 	"tahfidz-backend/auth"
-	"tahfidz-backend/handler"
-	"tahfidz-backend/handler/user"
+	"tahfidz-backend/service"
+	"tahfidz-backend/service/subject"
+	"tahfidz-backend/service/user"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	logrus.SetFormatter(&logrus.JSONFormatter{})
 	router := gin.Default()
 
-	db := handler.ConnectToDatabase()
+	db := service.ConnectToDatabase()
 	router.Use(func(c *gin.Context) {
 		c.Set("db", db)
 	})
@@ -35,6 +38,8 @@ func userApi(router *gin.Engine) {
 	router.GET("/api/users", user.FetchAll)
 	router.GET("/api/users/:id", user.FetchById)
 	router.GET("/api/users/role/:role", user.FetchByRole)
+	router.GET("/api/users/name/:name", user.FetchByName)
+	router.GET("/api/users/username/:username", user.FetchByUsername)
 	router.GET("/api/users/count", user.Count)
 
 	router.POST("/api/users", user.Create)
@@ -45,4 +50,15 @@ func userApi(router *gin.Engine) {
 }
 
 func subjectApi(router *gin.Engine) {
+	router.GET("/api/subjects", subject.FetchSubjects)
+	router.GET("/api/subjects/:id", subject.FetchSubjectById)
+	router.GET("/api/subjects/name/:name", subject.FetchSubjectByName)
+	router.GET("/api/subjects/type/:type", subject.FetchSubjectByType)
+	router.GET("/api/subjects/count", subject.Count)
+
+	router.POST("/api/subjects", subject.Create)
+
+	router.PUT("/api/subjects", subject.Update)
+
+	router.DELETE("/api/subjects/:id", subject.Delete)
 }
