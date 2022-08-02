@@ -14,7 +14,7 @@ func FetchSubjectProgress() []model.SubjectProgress {
 	return subjectProgress
 }
 
-func FetchSubjectProgressByUserIdAndSubjectId(userId string, subjectId string) model.SubjectProgress {
+func FetchSubjectProgressByUserIdAndSubjectId(userId int, subjectId int) model.SubjectProgress {
 	db := service.ConnectToDatabase()
 	var subjectProgress model.SubjectProgress
 
@@ -23,7 +23,7 @@ func FetchSubjectProgressByUserIdAndSubjectId(userId string, subjectId string) m
 	return subjectProgress
 }
 
-func FetchSubjectProgressBySubjectId(subjectId string) model.SubjectProgress {
+func FetchSubjectProgressBySubjectId(subjectId int) model.SubjectProgress {
 	db := service.ConnectToDatabase()
 	var subjectProgress model.SubjectProgress
 
@@ -32,11 +32,11 @@ func FetchSubjectProgressBySubjectId(subjectId string) model.SubjectProgress {
 	return subjectProgress
 }
 
-func FetchSubjectProgressByUserId(userId string) []model.SubjectProgress {
+func FetchSubjectProgressByUserId(userId int) []model.SubjectProgress {
 	db := service.ConnectToDatabase()
 	var subjectProgress []model.SubjectProgress
 
-	db.Where("userId = ? AND markForDelete = ?").Find(&subjectProgress)
+	db.Where("userId = ? AND markForDelete = ?", userId, false).Find(&subjectProgress)
 
 	return subjectProgress
 }

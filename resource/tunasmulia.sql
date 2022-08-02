@@ -36,13 +36,16 @@ CREATE TABLE IF NOT EXISTS quranprogress (
     ayat VARCHAR(5),
     juz VARCHAR(10),
     method VARCHAR(25),
-    userid VARCHAR(15) NOT NULL
+    userid int NOT NULL,
+    FOREIGN KEY (userid) REFERENCES user(id)
 );
 
 CREATE TABLE IF NOT EXISTS subjectprogress (
     id INT AUTO_INCREMENT PRIMARY KEY,
     createdDate DATE,
     markForDelete BOOLEAN default false,
-    userid VARCHAR(255) NOT NULL,
-    subjectid VARCHAR(255) NOT NULL,
+    userid int NOT NULL,
+    subjectid int NOT NULL,
+    FOREIGN KEY (userid) REFERENCES user(id),
+    FOREIGN KEY (subjectid) REFERENCES subject(id)
 );

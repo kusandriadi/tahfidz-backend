@@ -2,6 +2,7 @@ package quranprogress
 
 import (
 	"github.com/gin-gonic/gin"
+	"strconv"
 	"tahfidz-backend/auth"
 	"tahfidz-backend/repository"
 	"tahfidz-backend/util"
@@ -21,8 +22,14 @@ func FetchQuranProgressByUserId(context *gin.Context) {
 	}
 
 	userId := context.Param("userId")
+	if !util.IsNumber(userId) {
+		util.Response400(context, "", "user id harus angka")
+		return
+	}
 
-	util.Response200(context, repository.FetchQuranProgressByUserId(userId), "")
+	id, _ := strconv.Atoi(userId)
+
+	util.Response200(context, repository.FetchQuranProgressByUserId(id), "")
 }
 
 func FetchQuranProgressByUserIdAndMethod(context *gin.Context) {
@@ -31,7 +38,13 @@ func FetchQuranProgressByUserIdAndMethod(context *gin.Context) {
 	}
 
 	userId := context.Param("userId")
+	if !util.IsNumber(userId) {
+		util.Response400(context, "", "user id harus angka")
+		return
+	}
+	id, _ := strconv.Atoi(userId)
+
 	method := context.Param("method")
 
-	util.Response200(context, repository.FetchQuranProgressByUserIdAndMethod(userId, method), "")
+	util.Response200(context, repository.FetchQuranProgressByUserIdAndMethod(id, method), "")
 }

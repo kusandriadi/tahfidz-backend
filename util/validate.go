@@ -103,7 +103,7 @@ func ValidateSubject(subject *model.Subject) (bool, string) {
 
 func ValidateQuranProgress(quranProgress *model.QuranProgress) (bool, string) {
 	if len(quranProgress.Juz) > 0 && len(quranProgress.Ayat) > 0 &&
-		len(quranProgress.Surat) > 0 && len(quranProgress.UserId) > 0 &&
+		len(quranProgress.Surat) > 0 && &quranProgress.UserId != nil &&
 		len(quranProgress.Method) > 0 {
 		user := repository.FetchUserById(quranProgress.UserId)
 		if &user != nil {
@@ -117,11 +117,16 @@ func ValidateQuranProgress(quranProgress *model.QuranProgress) (bool, string) {
 }
 
 func ValidateSubjectProgress(subjectProgress *model.SubjectProgress) (bool, string) {
-	if len(subjectProgress.SubjectId) > 0 &&
-		len(subjectProgress.UserId) > 0 {
+	if &subjectProgress.SubjectId != nil &&
+		&subjectProgress.UserId != nil {
 		user := repository.FetchUserById(subjectProgress.UserId)
 		subject := repository.FetchSubjectById(subjectProgress.SubjectId)
 		if &user != nil && &subject != nil {
+			subjectProgressExisted := repository.FetchSubjectProgressByUserIdAndSubjectId(subjectProgress.UserId,
+				subjectProgress.SubjectId)
+			if &subjectProgressExisted != nil {
+				return false, "Data subject progress sudah ada."
+			}
 			return true, ""
 		}
 

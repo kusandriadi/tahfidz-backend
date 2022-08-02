@@ -2,6 +2,7 @@ package subjectprogress
 
 import (
 	"github.com/gin-gonic/gin"
+	"strconv"
 	"tahfidz-backend/auth"
 	"tahfidz-backend/repository"
 	"tahfidz-backend/util"
@@ -21,9 +22,21 @@ func FetchSubjectProgressByUserIdAndSubjectId(context *gin.Context) {
 	}
 
 	userId := context.Param("userId")
-	subjectId := context.Param("subjectId")
+	if !util.IsNumber(userId) {
+		util.Response400(context, "", "user id harus angka")
+		return
+	}
+	uId, _ := strconv.Atoi(userId)
 
-	util.Response200(context, repository.FetchSubjectProgressByUserIdAndSubjectId(userId, subjectId), "")
+	subjectId := context.Param("subjectId")
+	if !util.IsNumber(subjectId) {
+		util.Response400(context, "", "subject id harus angka")
+		return
+	}
+
+	sId, _ := strconv.Atoi(subjectId)
+
+	util.Response200(context, repository.FetchSubjectProgressByUserIdAndSubjectId(uId, sId), "")
 }
 
 func FetchSubjectProgressBySubjectId(context *gin.Context) {
@@ -32,8 +45,14 @@ func FetchSubjectProgressBySubjectId(context *gin.Context) {
 	}
 
 	subjectId := context.Param("subjectId")
+	if !util.IsNumber(subjectId) {
+		util.Response400(context, "", "subject id harus angka")
+		return
+	}
 
-	util.Response200(context, repository.FetchSubjectProgressBySubjectId(subjectId), "")
+	id, _ := strconv.Atoi(subjectId)
+
+	util.Response200(context, repository.FetchSubjectProgressBySubjectId(id), "")
 }
 
 func FetchSubjectProgressByUserId(context *gin.Context) {
@@ -42,6 +61,12 @@ func FetchSubjectProgressByUserId(context *gin.Context) {
 	}
 
 	userId := context.Param("userId")
+	if !util.IsNumber(userId) {
+		util.Response400(context, "", "user id harus angka")
+		return
+	}
 
-	util.Response200(context, repository.FetchSubjectProgressByUserId(userId), "")
+	id, _ := strconv.Atoi(userId)
+
+	util.Response200(context, repository.FetchSubjectProgressByUserId(id), "")
 }

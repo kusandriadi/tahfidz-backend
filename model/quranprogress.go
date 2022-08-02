@@ -11,6 +11,6 @@ type QuranProgress struct {
 	Surat         string    `json:"surat" gorm:"column:surah"`
 	Ayat          string    `json:"ayat" gorm:"column:ayat"`
 	Juz           string    `json:"juz" gorm:"column:juz"`
-	UserId        string    `json:"userId" gorm:"column:userId"`
+	UserId        int       `json:"userId" gorm:"column:userId"`
 	Method        string    `json:"method" gorm:"column:method"`
 }

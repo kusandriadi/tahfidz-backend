@@ -23,7 +23,7 @@ func FetchSubjectByType(subjectType string) model.Subject {
 	return subject
 }
 
-func FetchSubjectById(id string) model.Subject {
+func FetchSubjectById(id int) model.Subject {
 	db := service.ConnectToDatabase()
 	var subject model.Subject
 

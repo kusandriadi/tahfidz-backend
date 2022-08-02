@@ -23,7 +23,7 @@ func FetchUserByUsername(username string) model.User {
 	return user
 }
 
-func FetchUserById(id string) model.User {
+func FetchUserById(id int) model.User {
 	db := service.ConnectToDatabase()
 	var user model.User
 

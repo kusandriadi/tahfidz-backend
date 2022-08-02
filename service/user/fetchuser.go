@@ -2,6 +2,7 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
+	"strconv"
 	"tahfidz-backend/auth"
 	"tahfidz-backend/repository"
 	"tahfidz-backend/util"
@@ -59,6 +60,7 @@ func FetchById(context *gin.Context) {
 		util.Response400(context, "", "user id harus angka")
 		return
 	}
+	idI, _ := strconv.Atoi(id)
 
-	util.Response200(context, repository.FetchUserById(id), "")
+	util.Response200(context, repository.FetchUserById(idI), "")
 }

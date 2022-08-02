@@ -2,6 +2,7 @@ package subject
 
 import (
 	"github.com/gin-gonic/gin"
+	"strconv"
 	"tahfidz-backend/auth"
 	"tahfidz-backend/repository"
 	"tahfidz-backend/util"
@@ -36,6 +37,7 @@ func FetchSubjectById(context *gin.Context) {
 		util.Response400(context, "", "user id harus angka")
 		return
 	}
+	idI, _ := strconv.Atoi(id)
 
-	util.Response200(context, repository.FetchSubjectById(id), "")
+	util.Response200(context, repository.FetchSubjectById(idI), "")
 }

@@ -14,7 +14,7 @@ func FetchQuranProgress() []model.QuranProgress {
 	return quranProgress
 }
 
-func FetchQuranProgressByUserId(userId string) model.QuranProgress {
+func FetchQuranProgressByUserId(userId int) model.QuranProgress {
 	db := service.ConnectToDatabase()
 	var quranProgress model.QuranProgress
 
@@ -23,7 +23,7 @@ func FetchQuranProgressByUserId(userId string) model.QuranProgress {
 	return quranProgress
 }
 
-func FetchQuranProgressByUserIdAndMethod(userId string, method string) model.QuranProgress {
+func FetchQuranProgressByUserIdAndMethod(userId int, method string) model.QuranProgress {
 	db := service.ConnectToDatabase()
 	var quranProgress model.QuranProgress
 
