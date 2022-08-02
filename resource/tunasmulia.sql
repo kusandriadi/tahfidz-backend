@@ -27,3 +27,22 @@ CREATE TABLE IF NOT EXISTS subject (
     type VARCHAR(15),
     duration int
 );
+
+CREATE TABLE IF NOT EXISTS quranprogress (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    createdDate DATE,
+    markForDelete BOOLEAN default false,
+    surat VARCHAR(5),
+    ayat VARCHAR(5),
+    juz VARCHAR(10),
+    method VARCHAR(25),
+    userid VARCHAR(15) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS subjectprogress (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    createdDate DATE,
+    markForDelete BOOLEAN default false,
+    userid VARCHAR(255) NOT NULL,
+    subjectid VARCHAR(255) NOT NULL,
+);

@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 	"tahfidz-backend/model"
+	"tahfidz-backend/repository"
 )
 
 func IsNumber(parameter string) bool {
@@ -98,4 +99,34 @@ func ValidateSubject(subject *model.Subject) (bool, string) {
 
 	return false, "Subject type " + subject.Type + " tidak ditemukan."
 
+}
+
+func ValidateQuranProgress(quranProgress *model.QuranProgress) (bool, string) {
+	if len(quranProgress.Juz) > 0 && len(quranProgress.Ayat) > 0 &&
+		len(quranProgress.Surat) > 0 && len(quranProgress.UserId) > 0 &&
+		len(quranProgress.Method) > 0 {
+		user := repository.FetchUserById(quranProgress.UserId)
+		if &user != nil {
+			return true, ""
+		}
+
+		return false, "Data user tidak ditemukan."
+	}
+
+	return false, "Data yang diberikan tidak lengkap."
+}
+
+func ValidateSubjectProgress(subjectProgress *model.SubjectProgress) (bool, string) {
+	if len(subjectProgress.SubjectId) > 0 &&
+		len(subjectProgress.UserId) > 0 {
+		user := repository.FetchUserById(subjectProgress.UserId)
+		subject := repository.FetchSubjectById(subjectProgress.SubjectId)
+		if &user != nil && &subject != nil {
+			return true, ""
+		}
+
+		return false, "Data user dan subject tidak ditemukan."
+	}
+
+	return false, "Data yang diberikan tidak lengkap."
 }

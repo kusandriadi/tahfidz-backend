@@ -4,7 +4,9 @@ import (
 	"github.com/sirupsen/logrus"
 	"tahfidz-backend/auth"
 	"tahfidz-backend/service"
+	"tahfidz-backend/service/quranprogress"
 	"tahfidz-backend/service/subject"
+	"tahfidz-backend/service/subjectprogress"
 	"tahfidz-backend/service/user"
 
 	"github.com/gin-gonic/gin"
@@ -22,6 +24,8 @@ func main() {
 	authApi(router)
 	userApi(router)
 	subjectApi(router)
+	quranProgressApi(router)
+	subjectProgressApi(router)
 
 	router.Run(":8088")
 }
@@ -61,4 +65,25 @@ func subjectApi(router *gin.Engine) {
 	router.PUT("/api/subjects", subject.Update)
 
 	router.DELETE("/api/subjects/:id", subject.Delete)
+}
+
+func quranProgressApi(router *gin.Engine) {
+	router.GET("/api/quran-progress", quranprogress.FetchQuranProgress)
+	router.GET("/api/quran-progress/user/:userId", quranprogress.FetchQuranProgressByUserId)
+	router.GET("/api/quran-progress/user/:userId/method/:method", quranprogress.FetchQuranProgressByUserIdAndMethod)
+
+	router.POST("/api/quran-progress", quranprogress.Create)
+
+	router.DELETE("/api/quran-progress/:id", quranprogress.Delete)
+}
+
+func subjectProgressApi(router *gin.Engine) {
+	router.GET("/api/subject-progress", subjectprogress.FetchSubjectProgress)
+	router.GET("/api/subject-progress/user/:userId", subjectprogress.FetchSubjectProgressByUserId)
+	router.GET("/api/subject-progress/user/:userId/subject/:subjectId", subjectprogress.FetchSubjectProgressByUserIdAndSubjectId)
+	router.GET("/api/subject-progress/subject/:subjectId", subjectprogress.FetchSubjectProgressBySubjectId)
+
+	router.POST("/api/subject-progress", subjectprogress.Create)
+
+	router.DELETE("/api/subject-progress/:id", subjectprogress.Delete)
 }
