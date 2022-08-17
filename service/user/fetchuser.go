@@ -22,7 +22,7 @@ func FetchByRole(context *gin.Context) {
 	}
 
 	role := context.Param("role")
-	if util.Role(role) {
+	if !util.Role(role) {
 		util.Response400(context, "Role "+role+" tidak ditemukan.", "")
 		return
 	}
