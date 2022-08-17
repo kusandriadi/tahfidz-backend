@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 	"tahfidz-backend/model"
+	"tahfidz-backend/model/enum"
 	"tahfidz-backend/repository"
 )
 
@@ -101,10 +102,20 @@ func ValidateSubject(subject *model.Subject) (bool, string) {
 
 }
 
+func quranMethodPass(method string) bool {
+	if strings.EqualFold(enum.QuranMethodEnum().SABAQ, method) ||
+		strings.EqualFold(enum.QuranMethodEnum().MANZIL, method) ||
+		strings.EqualFold(enum.QuranMethodEnum().SABAQI, method) {
+		return true
+	}
+
+	return false
+}
+
 func ValidateQuranProgress(quranProgress *model.QuranProgress) (bool, string) {
 	if len(quranProgress.Juz) > 0 && len(quranProgress.Ayat) > 0 &&
 		len(quranProgress.Surat) > 0 && &quranProgress.UserId != nil &&
-		len(quranProgress.Method) > 0 {
+		len(quranProgress.Method) > 0 && quranMethodPass(quranProgress.Method) {
 		user := repository.FetchUserById(quranProgress.UserId)
 		if &user != nil {
 			return true, ""

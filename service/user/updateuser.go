@@ -5,12 +5,13 @@ import (
 	"gorm.io/gorm"
 	"tahfidz-backend/auth"
 	"tahfidz-backend/model"
+	"tahfidz-backend/model/enum"
 	"tahfidz-backend/util"
 	"time"
 )
 
 func Update(context *gin.Context) {
-	if !auth.Auth(context) {
+	if !auth.Auth(context, enum.UserRoleEnum().ADMIN) {
 		return
 	}
 

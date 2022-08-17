@@ -10,4 +10,5 @@ type SubjectProgress struct {
 	MarkForDelete bool      `json:"markForDelete" gorm:"column:markForDelete"`
 	UserId        int       `json:"userId" gorm:"column:userId"`
 	SubjectId     int       `json:"subjectId" gorm:"column:subjectId"`
+	Presence      bool      `json:"presence" gorm:"column:presence"`
 }

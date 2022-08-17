@@ -50,11 +50,11 @@ func FetchUserByRole(role string) []model.User {
 	return users
 }
 
-func CountUser() model.UserCount {
+func CountUser() []model.UserCount {
 	db := service.ConnectToDatabase()
-	var userCount model.UserCount
+	var userCount []model.UserCount
 
-	db.Select("DISTINCT ON (role) role", "total").Find(&userCount)
+	db.Raw("Select Role, COUNT(Role) as total FROM user GROUP BY role").Scan(&userCount)
 
 	return userCount
 }

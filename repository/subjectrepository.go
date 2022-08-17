@@ -41,11 +41,11 @@ func FetchSubjectByName(name string) []model.Subject {
 	return subjects
 }
 
-func CountSubject() model.SubjectCount {
+func CountSubject() []model.SubjectCount {
 	db := service.ConnectToDatabase()
-	var subjectCount model.SubjectCount
+	var subjectCount []model.SubjectCount
 
-	db.Select("DISTINCT ON (role) role", "total").Find(&subjectCount)
+	db.Raw("Select Type, COUNT(Type) as total FROM subject GROUP BY Type").Scan(&subjectCount)
 
 	return subjectCount
 }

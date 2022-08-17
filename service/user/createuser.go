@@ -3,6 +3,7 @@ package user
 import (
 	"tahfidz-backend/auth"
 	"tahfidz-backend/model"
+	"tahfidz-backend/model/enum"
 	"tahfidz-backend/util"
 	"time"
 
@@ -11,7 +12,7 @@ import (
 )
 
 func Create(context *gin.Context) {
-	if !auth.Auth(context) {
+	if !auth.Auth(context, enum.UserRoleEnum().ADMIN) {
 		return
 	}
 

@@ -4,12 +4,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"strconv"
 	"tahfidz-backend/auth"
+	"tahfidz-backend/model/enum"
 	"tahfidz-backend/repository"
 	"tahfidz-backend/util"
 )
 
 func FetchSubjects(context *gin.Context) {
-	if !auth.Auth(context) {
+	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
 		return
 	}
 
@@ -17,21 +18,30 @@ func FetchSubjects(context *gin.Context) {
 }
 
 func FetchSubjectByType(context *gin.Context) {
-	auth.Auth(context)
+	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
+		return
+	}
+
 	role := context.Param("subjectType")
 
 	util.Response200(context, repository.FetchSubjectByType(role), "")
 }
 
 func FetchSubjectByName(context *gin.Context) {
-	auth.Auth(context)
+	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
+		return
+	}
+
 	name := context.Param("name")
 
 	util.Response200(context, repository.FetchSubjectByName(name), "")
 }
 
 func FetchSubjectById(context *gin.Context) {
-	auth.Auth(context)
+	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
+		return
+	}
+
 	id := context.Param("id")
 	if !util.IsNumber(id) {
 		util.Response400(context, "", "user id harus angka")

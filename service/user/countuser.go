@@ -2,6 +2,7 @@ package user
 
 import (
 	"tahfidz-backend/auth"
+	"tahfidz-backend/model/enum"
 	"tahfidz-backend/repository"
 	"tahfidz-backend/util"
 
@@ -9,7 +10,7 @@ import (
 )
 
 func Count(context *gin.Context) {
-	if !auth.Auth(context) {
+	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
 		return
 	}
 

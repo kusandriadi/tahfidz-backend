@@ -4,12 +4,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"strconv"
 	"tahfidz-backend/auth"
+	"tahfidz-backend/model/enum"
 	"tahfidz-backend/repository"
 	"tahfidz-backend/util"
 )
 
 func FetchSubjectProgress(context *gin.Context) {
-	if !auth.Auth(context) {
+	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
 		return
 	}
 
@@ -17,7 +18,7 @@ func FetchSubjectProgress(context *gin.Context) {
 }
 
 func FetchSubjectProgressByUserIdAndSubjectId(context *gin.Context) {
-	if !auth.Auth(context) {
+	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
 		return
 	}
 
@@ -40,7 +41,7 @@ func FetchSubjectProgressByUserIdAndSubjectId(context *gin.Context) {
 }
 
 func FetchSubjectProgressBySubjectId(context *gin.Context) {
-	if !auth.Auth(context) {
+	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
 		return
 	}
 
@@ -56,7 +57,7 @@ func FetchSubjectProgressBySubjectId(context *gin.Context) {
 }
 
 func FetchSubjectProgressByUserId(context *gin.Context) {
-	if !auth.Auth(context) {
+	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
 		return
 	}
 

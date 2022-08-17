@@ -32,20 +32,20 @@ func main() {
 }
 
 func CORSMiddleware() gin.HandlerFunc {
-    return func(c *gin.Context) {
+	return func(c *gin.Context) {
 
-        c.Header("Access-Control-Allow-Origin", "*")
-        c.Header("Access-Control-Allow-Credentials", "true")
-        c.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
-        c.Header("Access-Control-Allow-Methods", "POST,HEAD,PATCH, OPTIONS, GET, PUT")
+		c.Header("Access-Control-Allow-Origin", "*")
+		c.Header("Access-Control-Allow-Credentials", "true")
+		c.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		c.Header("Access-Control-Allow-Methods", "POST,HEAD,PATCH, OPTIONS, GET, PUT")
 
-        if c.Request.Method == "OPTIONS" {
-            c.AbortWithStatus(204)
-            return
-        }
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
 
-        c.Next()
-    }
+		c.Next()
+	}
 }
 
 func authApi(router *gin.Engine) {
@@ -89,8 +89,11 @@ func quranProgressApi(router *gin.Engine) {
 	router.GET("/api/quran-progress", quranprogress.FetchQuranProgress)
 	router.GET("/api/quran-progress/user/:userId", quranprogress.FetchQuranProgressByUserId)
 	router.GET("/api/quran-progress/user/:userId/method/:method", quranprogress.FetchQuranProgressByUserIdAndMethod)
+	router.GET("/api/quran-progress/user/:userId/method/count", quranprogress.CountQuranProgressMethod)
+	router.GET("/api/quran-progress/user/:userId/progress", quranprogress.CurrentQuranProgress)
+	router.GET("/api/quran-progress/method/:method", quranprogress.FetchQuranProgressByMethod)
 
-	router.POST("/api/quran-progress", quranprogress.Create)
+	router.POST("/api/quran-progress", quranprogress.Update)
 
 	router.DELETE("/api/quran-progress/:id", quranprogress.Delete)
 }
@@ -101,7 +104,7 @@ func subjectProgressApi(router *gin.Engine) {
 	router.GET("/api/subject-progress/user/:userId/subject/:subjectId", subjectprogress.FetchSubjectProgressByUserIdAndSubjectId)
 	router.GET("/api/subject-progress/subject/:subjectId", subjectprogress.FetchSubjectProgressBySubjectId)
 
-	router.POST("/api/subject-progress", subjectprogress.Create)
+	router.POST("/api/subject-progress", subjectprogress.Update)
 
 	router.DELETE("/api/subject-progress/:id", subjectprogress.Delete)
 }

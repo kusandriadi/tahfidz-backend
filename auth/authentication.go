@@ -2,18 +2,19 @@ package auth
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
+	"strings"
 	"tahfidz-backend/model"
 	"tahfidz-backend/repository"
 	"tahfidz-backend/util"
-
-	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt/v4"
+	"time"
 )
 
-func Auth(context *gin.Context) bool {
+func Auth(context *gin.Context, expectedRole string) bool {
 	tokenString := context.Request.Header.Get("Authorization")
 	if len(tokenString) <= 0 {
 		util.Response(context, http.StatusBadRequest,
@@ -21,7 +22,7 @@ func Auth(context *gin.Context) bool {
 		return false
 	}
 
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+	token, _ := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if jwt.GetSigningMethod("HS256") != token.Method {
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
@@ -29,16 +30,20 @@ func Auth(context *gin.Context) bool {
 		return []byte("secret"), nil
 	})
 
-	if token != nil && err == nil {
-		logrus.Info("Token verified")
-	} else {
-		util.Response(context, http.StatusUnauthorized,
-			"Anda tidak diperbolehkan untuk masuk. Silakan hubungi Admin.")
-		context.Abort()
-		return false
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		var role = claims["Role"].(string)
+		logrus.Info("Sukses login dengan username " + claims["Username"].(string) + " dan role " + role)
+		if len(expectedRole) > 0 {
+			return strings.EqualFold(expectedRole, role)
+		}
+
+		return true
 	}
 
-	return true
+	util.Response(context, http.StatusUnauthorized,
+		"Anda tidak diperbolehkan untuk masuk. Silakan hubungi Admin.")
+	context.Abort()
+	return false
 }
 
 func Login(context *gin.Context) {
@@ -61,7 +66,15 @@ func Login(context *gin.Context) {
 		return
 	}
 
-	sign := jwt.New(jwt.SigningMethodHS256)
+	claims := model.TahfidzClaim{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)),
+		},
+		Username: existingUser.Username,
+		Role:     existingUser.Role,
+	}
+
+	sign := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token, err := sign.SignedString([]byte("secret"))
 
 	if err != nil {
