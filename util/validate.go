@@ -85,7 +85,7 @@ func ValidateSubject(subject *model.Subject) (bool, string) {
 		}
 	}
 
-	if isLetter {
+	if !isLetter {
 		return false, "Nama Subject harus karakter a-z A-Z."
 	}
 

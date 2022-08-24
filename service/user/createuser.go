@@ -38,7 +38,8 @@ func Create(context *gin.Context) {
 		return
 	}
 
-	newUser.CreatedDate = time.Now()
+	now := time.Now()
+	newUser.CreatedDate = &now
 
 	if newUser.BirthDate != nil {
 		var formattedDate, _ = time.Parse("02-01-2006", newUser.BirthDate.Format("02-01-2006"))

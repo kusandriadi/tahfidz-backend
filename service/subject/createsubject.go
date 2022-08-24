@@ -38,7 +38,8 @@ func Create(context *gin.Context) {
 		return
 	}
 
-	newSubject.CreatedDate = time.Now()
+	now := time.Now()
+	newSubject.CreatedDate = &now
 
 	createResult := db.Create(&newSubject)
 

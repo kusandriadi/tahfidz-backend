@@ -70,6 +70,7 @@ func Login(context *gin.Context) {
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)),
 		},
+		Id:       existingUser.Id,
 		Username: existingUser.Username,
 		Role:     existingUser.Role,
 	}
@@ -86,6 +87,6 @@ func Login(context *gin.Context) {
 		"code":    http.StatusOK,
 		"message": http.StatusText(http.StatusOK),
 		"token":   token,
-		"id": user.Id,
+		"id":      claims.Id,
 	})
 }

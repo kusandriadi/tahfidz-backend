@@ -33,9 +33,10 @@ func FetchQuranProgressByMethod(method string) []model.QuranProgress {
 	if len(quranProgress) == 0 {
 		var users = FetchUsers()
 		var constructQuranProgress []model.QuranProgress
+		now := time.Now()
 		for _, u := range users {
 			constructQuranProgress = append(constructQuranProgress, model.QuranProgress{
-				CreatedDate:   time.Now(),
+				CreatedDate:   &now,
 				MarkForDelete: false,
 				UserId:        u.Id,
 				Method:        method})

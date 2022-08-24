@@ -5,14 +5,14 @@ import (
 )
 
 type QuranProgress struct {
-	Id            int       `json:"id" gorm:"primary_key" gorm:"column:id"`
-	CreatedDate   time.Time `json:"createdDate" gorm:"column:createdDate"`
-	MarkForDelete bool      `json:"markForDelete" gorm:"column:markForDelete"`
-	Surat         string    `json:"surat" gorm:"column:surat"`
-	Ayat          string    `json:"ayat" gorm:"column:ayat"`
-	Juz           string    `json:"juz" gorm:"column:juz"`
-	UserId        int       `json:"userId" gorm:"column:userId"`
-	Method        string    `json:"method" gorm:"column:method"`
+	Id            int        `json:"id,omitempty" gorm:"primary_key" gorm:"column:id"`
+	CreatedDate   *time.Time `json:"createdDate,omitempty" gorm:"column:createdDate"`
+	MarkForDelete bool       `json:"markForDelete,omitempty" gorm:"column:markForDelete"`
+	Surat         string     `json:"surat,omitempty" gorm:"column:surat"`
+	Ayat          string     `json:"ayat,omitempty" gorm:"column:ayat"`
+	Juz           string     `json:"juz,omitempty" gorm:"column:juz"`
+	UserId        int        `json:"userId,omitempty" gorm:"column:userId"`
+	Method        string     `json:"method,omitempty" gorm:"column:method"`
 }
 
 type QuranProgressMethodCount struct {

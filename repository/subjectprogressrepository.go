@@ -39,9 +39,10 @@ func FetchSubjectProgressBySubjectId(subjectId int) []model.SubjectProgress {
 	if len(subjectProgress) == 0 {
 		var users = FetchUsers()
 		var constructSubjectProgress []model.SubjectProgress
+		now := time.Now()
 		for _, u := range users {
 			constructSubjectProgress = append(constructSubjectProgress, model.SubjectProgress{
-				CreatedDate:   time.Now(),
+				CreatedDate:   &now,
 				MarkForDelete: false,
 				UserId:        u.Id,
 				SubjectId:     subjectId})
