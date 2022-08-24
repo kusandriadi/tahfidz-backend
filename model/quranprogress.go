@@ -26,3 +26,7 @@ type CurrentQuranProgress struct {
 	Surat      int    `json:"surat"`
 	Ayat       int    `json:"ayat"`
 }
+
+func (QuranProgress) TableName() string {
+	return "quranprogress"
+}

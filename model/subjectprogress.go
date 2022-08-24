@@ -12,3 +12,7 @@ type SubjectProgress struct {
 	SubjectId     int        `json:"subjectId,omitempty" gorm:"column:subjectId"`
 	Presence      bool       `json:"presence,omitempty" gorm:"column:presence"`
 }
+
+func (SubjectProgress) TableName() string {
+	return "subjectprogress"
+}
