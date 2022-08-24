@@ -22,9 +22,9 @@ func FetchSubjectByType(context *gin.Context) {
 		return
 	}
 
-	role := context.Param("subjectType")
+	subjectType := context.Param("type")
 
-	util.Response200(context, repository.FetchSubjectByType(role), "")
+	util.Response200(context, repository.FetchSubjectByType(subjectType), "")
 }
 
 func FetchSubjectByName(context *gin.Context) {

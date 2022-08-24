@@ -19,3 +19,7 @@ type SubjectCount struct {
 	Type  string `json:"type"`
 	Total int    `json:"total"`
 }
+
+func (Subject) TableName() string {
+	return "subject"
+}

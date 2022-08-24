@@ -14,13 +14,13 @@ func FetchSubjects() []model.Subject {
 	return subjects
 }
 
-func FetchSubjectByType(subjectType string) model.Subject {
+func FetchSubjectByType(subjectType string) []model.Subject {
 	db := service.ConnectToDatabase()
-	var subject model.Subject
+	var subjects []model.Subject
 
-	db.Where("type = ? AND markForDelete = ?", subjectType, false).Find(&subject)
+	db.Where("type = ? AND markForDelete = ?", subjectType, false).Find(&subjects)
 
-	return subject
+	return subjects
 }
 
 func FetchSubjectById(id int) model.Subject {
