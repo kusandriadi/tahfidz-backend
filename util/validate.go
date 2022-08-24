@@ -89,7 +89,7 @@ func ValidateSubject(subject *model.Subject) (bool, string) {
 		return false, "Nama Subject harus karakter a-z A-Z."
 	}
 
-	if strings.EqualFold("KAJIAN", subject.Type) && strings.EqualFold("PELAJARAN", subject.Type) {
+	if strings.EqualFold("KAJIAN", subject.Type) || strings.EqualFold("PELAJARAN", subject.Type) {
 		if len(subject.Name) > 0 && len(subject.Book) > 0 &&
 			len(subject.Author) > 0 {
 			return true, ""
