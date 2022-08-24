@@ -86,5 +86,6 @@ func Login(context *gin.Context) {
 		"code":    http.StatusOK,
 		"message": http.StatusText(http.StatusOK),
 		"token":   token,
+		"id": user.Id,
 	})
 }
