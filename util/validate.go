@@ -112,33 +112,41 @@ func quranMethodPass(method string) bool {
 	return false
 }
 
-func ValidateQuranProgress(quranProgress *model.QuranProgress) (bool, string) {
-	if len(quranProgress.Juz) > 0 && len(quranProgress.Ayat) > 0 &&
-		len(quranProgress.Surat) > 0 && &quranProgress.UserId != nil &&
+func ValidateQuranProgress(quranProgress *model.QuranProgress, create bool) (bool, string) {
+	if quranProgress.Juz > 0 && quranProgress.Ayat > 0 &&
+		len(quranProgress.Surat) > 0 && quranProgress.UserId > 0 &&
 		len(quranProgress.Method) > 0 && quranMethodPass(quranProgress.Method) {
-		user := repository.FetchUserById(quranProgress.UserId)
-		if &user != nil {
+		if create {
 			return true, ""
-		}
+		} else {
+			user := repository.FetchUserById(quranProgress.UserId)
+			if &user != nil {
+				return true, ""
+			}
 
-		return false, "Data user tidak ditemukan."
+			return false, "Data user tidak ditemukan."
+		}
 	}
 
 	return false, "Data yang diberikan tidak lengkap."
 }
 
-func ValidateSubjectProgress(subjectProgress *model.SubjectProgress) (bool, string) {
-	if &subjectProgress.SubjectId != nil &&
-		&subjectProgress.UserId != nil {
+func ValidateSubjectProgress(subjectProgress *model.SubjectProgress, create bool) (bool, string) {
+	if subjectProgress.SubjectId > 0 &&
+		subjectProgress.UserId > 0 {
 		user := repository.FetchUserById(subjectProgress.UserId)
 		subject := repository.FetchSubjectById(subjectProgress.SubjectId)
 		if &user != nil && &subject != nil {
-			subjectProgressExisted := repository.FetchSubjectProgressByUserIdAndSubjectId(subjectProgress.UserId,
-				subjectProgress.SubjectId)
-			if &subjectProgressExisted != nil {
-				return false, "Data subject progress sudah ada."
+			if create {
+				return true, ""
+			} else {
+				subjectProgressExisted := repository.FetchSubjectProgressByUserIdAndSubjectId(subjectProgress.UserId,
+					subjectProgress.SubjectId)
+				if &subjectProgressExisted != nil {
+					return false, "Data subject progress sudah ada."
+				}
+				return true, ""
 			}
-			return true, ""
 		}
 
 		return false, "Data user dan subject tidak ditemukan."

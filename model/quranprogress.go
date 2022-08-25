@@ -9,8 +9,8 @@ type QuranProgress struct {
 	CreatedDate   *time.Time `json:"createdDate,omitempty" gorm:"column:createdDate"`
 	MarkForDelete bool       `json:"markForDelete,omitempty" gorm:"column:markForDelete"`
 	Surat         string     `json:"surat,omitempty" gorm:"column:surat"`
-	Ayat          string     `json:"ayat,omitempty" gorm:"column:ayat"`
-	Juz           string     `json:"juz,omitempty" gorm:"column:juz"`
+	Ayat          int        `json:"ayat,omitempty" gorm:"column:ayat"`
+	Juz           int        `json:"juz,omitempty" gorm:"column:juz"`
 	UserId        int        `json:"userId,omitempty" gorm:"column:userId"`
 	Method        string     `json:"method,omitempty" gorm:"column:method"`
 }

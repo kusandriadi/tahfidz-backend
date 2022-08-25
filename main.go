@@ -93,7 +93,8 @@ func quranProgressApi(router *gin.Engine) {
 	router.GET("/api/quran-progress/user/:userId/progress", quranprogress.CurrentQuranProgress)
 	router.GET("/api/quran-progress/method/:method", quranprogress.FetchQuranProgressByMethod)
 
-	router.POST("/api/quran-progress", quranprogress.Update)
+	router.POST("/api/quran-progress", quranprogress.Create)
+	router.PUT("/api/quran-progress", quranprogress.Update)
 
 	router.DELETE("/api/quran-progress/:id", quranprogress.Delete)
 }
@@ -104,7 +105,8 @@ func subjectProgressApi(router *gin.Engine) {
 	router.GET("/api/subject-progress/user/:userId/subject/:subjectId", subjectprogress.FetchSubjectProgressByUserIdAndSubjectId)
 	router.GET("/api/subject-progress/subject/:subjectId", subjectprogress.FetchSubjectProgressBySubjectId)
 
-	router.POST("/api/subject-progress", subjectprogress.Update)
+	router.POST("/api/subject-progress", subjectprogress.Create)
+	router.PUT("/api/subject-progress", subjectprogress.Update)
 
 	router.DELETE("/api/subject-progress/:id", subjectprogress.Delete)
 }

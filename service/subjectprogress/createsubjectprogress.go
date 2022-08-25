@@ -7,9 +7,10 @@ import (
 	"tahfidz-backend/model"
 	"tahfidz-backend/model/enum"
 	"tahfidz-backend/util"
+	"time"
 )
 
-func Update(context *gin.Context) {
+func Create(context *gin.Context) {
 	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
 		return
 	}
@@ -22,7 +23,7 @@ func Update(context *gin.Context) {
 		return
 	}
 
-	passValidation, message := util.ValidateSubjectProgress(&subjectProgress, false)
+	passValidation, message := util.ValidateSubjectProgress(&subjectProgress, true)
 	if !passValidation {
 		util.Response400(context, message, "")
 		return
@@ -30,10 +31,12 @@ func Update(context *gin.Context) {
 
 	db := context.MustGet("db").(*gorm.DB)
 
-	updateResult := db.Model(&subjectProgress).Updates(model.SubjectProgress{Presence: subjectProgress.Presence})
+	now := time.Now()
+	subjectProgress.CreatedDate = &now
+	createResult := db.Create(&subjectProgress)
 
-	if updateResult.Error != nil {
-		util.Response400(context, "Gagal membuat progress pelajaran.", updateResult.Error.Error())
+	if createResult.Error != nil {
+		util.Response400(context, "Gagal membuat progress pelajaran.", createResult.Error.Error())
 		return
 	}
 

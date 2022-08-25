@@ -48,7 +48,7 @@ func FetchByUsername(context *gin.Context) {
 
 	username := context.Param("username")
 
-	util.Response200(context, repository.FetchUserByUsername(username), "")
+	util.Response200(context, repository.FetchUserByUsername(username, false), "")
 }
 
 func FetchById(context *gin.Context) {

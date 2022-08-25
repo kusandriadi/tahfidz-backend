@@ -33,8 +33,8 @@ CREATE TABLE IF NOT EXISTS quranprogress (
     createdDate DATE,
     markForDelete BOOLEAN default false,
     surat VARCHAR(30),
-    ayat VARCHAR(5),
-    juz VARCHAR(10),
+    ayat int,
+    juz int,
     method VARCHAR(25),
     userid int NOT NULL,
     FOREIGN KEY (userid) REFERENCES user(id)

@@ -60,7 +60,7 @@ func Login(context *gin.Context) {
 		return
 	}
 
-	var existingUser = repository.FetchUserByUsername(user.Username)
+	var existingUser = repository.FetchUserByUsername(user.Username, true)
 	if err := bcrypt.CompareHashAndPassword([]byte(existingUser.Password), []byte(user.Password)); err != nil {
 		util.Response400(context, "Username dan/atau Password tidak sesuai.", "hash db :"+existingUser.Password+",hash user:"+user.Password)
 		return
