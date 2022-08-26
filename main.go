@@ -5,6 +5,7 @@ import (
 	"tahfidz-backend/auth"
 	"tahfidz-backend/service"
 	"tahfidz-backend/service/quranprogress"
+	"tahfidz-backend/service/report"
 	"tahfidz-backend/service/subject"
 	"tahfidz-backend/service/subjectprogress"
 	"tahfidz-backend/service/user"
@@ -27,6 +28,7 @@ func main() {
 	subjectApi(router)
 	quranProgressApi(router)
 	subjectProgressApi(router)
+	reportApi(router)
 
 	router.Run(":8088")
 }
@@ -109,4 +111,11 @@ func subjectProgressApi(router *gin.Engine) {
 	router.PUT("/api/subject-progress", subjectprogress.Update)
 
 	router.DELETE("/api/subject-progress/:id", subjectprogress.Delete)
+}
+
+func reportApi(router *gin.Engine) {
+	router.GET("/api/users/username/:username/report", report.FetchByUsername)
+	router.GET("/api/quran-progress/user/:userId/progress/report", report.CurrentQuranProgress)
+	router.GET("/api/quran-progress/user/:userId/method/count/report", report.CountQuranProgressMethod)
+	router.GET("/api/quran-progress/user/:userId/report", report.FetchQuranProgressByUserId)
 }
