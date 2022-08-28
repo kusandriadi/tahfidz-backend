@@ -2,6 +2,7 @@ package repository
 
 import (
 	"tahfidz-backend/model"
+	"tahfidz-backend/model/enum"
 	"tahfidz-backend/service"
 	"time"
 )
@@ -24,6 +25,16 @@ func FetchSubjectProgressByUserIdAndSubjectId(userId int, subjectId int) []model
 	return subjectProgress
 }
 
+func FetchSubjectProgressByUserIdAndSubjectIdAndCreatedDate(userId int, subjectId int, createdDate time.Time) model.SubjectProgress {
+	db := service.ConnectToDatabase()
+	var subjectProgress model.SubjectProgress
+
+	db.Where("userId = ? AND subjectId = ? AND markForDelete = ? AND date(createdDate) = ?",
+		userId, subjectId, false, createdDate.Format("2006-01-02")).Find(&subjectProgress)
+
+	return subjectProgress
+}
+
 func FetchSubjectProgressBySubjectId(subjectId int) []model.SubjectProgress {
 	db := service.ConnectToDatabase()
 	var subjectProgress []model.SubjectProgress
@@ -34,10 +45,10 @@ func FetchSubjectProgressBySubjectId(subjectId int) []model.SubjectProgress {
 		return subjectProgress
 	}
 
-	db.Where("subjectId = ? AND markForDelete = ? AND createdDate = ?", subjectId, false, time.Now()).Find(&subjectProgress)
+	db.Where("subjectId = ? AND markForDelete = ? AND date(createdDate) = ?", subjectId, false, time.Now().Format("2006-01-02")).Find(&subjectProgress)
 
 	if len(subjectProgress) == 0 {
-		var users = FetchUsers()
+		var users = FetchUserByRole(enum.UserRoleEnum().STUDENT)
 		var constructSubjectProgress []model.SubjectProgress
 		now := time.Now()
 		for _, u := range users {
@@ -50,8 +61,11 @@ func FetchSubjectProgressBySubjectId(subjectId int) []model.SubjectProgress {
 
 		db.Create(constructSubjectProgress)
 	}
-
-	db.Where("subjectId = ? AND markForDelete = ? AND createdDate = ?", subjectId, false, time.Now()).Find(&subjectProgress)
+	db.Select("subjectprogress.id, subjectprogress.createdDate, subjectprogress.markForDelete, subjectprogress.userId, "+
+		"user.name, subjectprogress.presence, subjectprogress.subjectId").
+		Joins("join user on user.id = subjectprogress.userId").
+		Where("subjectprogress.subjectId = ? AND subjectprogress.markForDelete = ? AND date(subjectprogress.createdDate) = ?", subjectId, false, time.Now().Format("2006-01-02")).
+		Find(&subjectProgress)
 
 	return subjectProgress
 }

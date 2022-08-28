@@ -30,7 +30,9 @@ func Update(context *gin.Context) {
 
 	db := context.MustGet("db").(*gorm.DB)
 
-	updateResult := db.Model(&subjectProgress).Updates(model.SubjectProgress{Presence: subjectProgress.Presence})
+	updateResult := db.Model(&subjectProgress).
+		Where("id = ?", subjectProgress.Id).
+		Update("presence", subjectProgress.Presence)
 
 	if updateResult.Error != nil {
 		util.Response400(context, "Gagal membuat progress pelajaran.", updateResult.Error.Error())

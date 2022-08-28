@@ -7,6 +7,7 @@ import (
 	"tahfidz-backend/model/enum"
 	"tahfidz-backend/repository"
 	"tahfidz-backend/util"
+	"time"
 )
 
 func FetchQuranProgress(context *gin.Context) {
@@ -47,7 +48,7 @@ func FetchQuranProgressByUserIdAndMethod(context *gin.Context) {
 
 	method := context.Param("method")
 
-	util.Response200(context, repository.FetchQuranProgressByUserIdAndMethod(id, method), "")
+	util.Response200(context, repository.FetchQuranProgressByUserIdAndMethodAndCreatedDate(id, method, time.Now()), "")
 }
 
 func FetchQuranProgressByMethod(context *gin.Context) {
@@ -88,4 +89,12 @@ func CurrentQuranProgress(context *gin.Context) {
 	id, _ := strconv.Atoi(userId)
 
 	util.Response200(context, repository.CurrentQuranProgress(id), "")
+}
+
+func GetAllQuranProgress(context *gin.Context) {
+	if !auth.Auth(context, enum.UserRoleEnum().ADMIN) {
+		return
+	}
+
+	util.Response200(context, repository.GetAllQuranProgress(), "")
 }

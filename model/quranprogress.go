@@ -12,19 +12,26 @@ type QuranProgress struct {
 	Ayat          int        `json:"ayat,omitempty" gorm:"column:ayat"`
 	Juz           int        `json:"juz,omitempty" gorm:"column:juz"`
 	UserId        int        `json:"userId,omitempty" gorm:"column:userId"`
+	Name          string     `json:"name,omitempty" gorm:"->"`
 	Method        string     `json:"method,omitempty" gorm:"column:method"`
 }
 
 type QuranProgressMethodCount struct {
-	Method string `json:"method"`
-	Total  int    `json:"total"`
+	Method string `json:"method,omitempty"`
+	Total  int    `json:"total,omitempty"`
+}
+
+type AllUserQuranProgress struct {
+	UserId int    `json:"userId,omitempty"`
+	Name   string `json:"name,omitempty"`
+	Total  int    `json:"total,omitempty"`
 }
 
 type CurrentQuranProgress struct {
-	UserId     string `json:"userId"`
-	TotalSurat int64  `json:"totalSurat"`
-	Surat      int    `json:"surat"`
-	Ayat       int    `json:"ayat"`
+	UserId     int    `json:"userId,omitempty"`
+	TotalSurat int    `json:"totalSurat,omitempty"`
+	Surat      string `json:"surat,omitempty"`
+	Ayat       int    `json:"ayat,omitempty"`
 }
 
 func (QuranProgress) TableName() string {

@@ -8,6 +8,7 @@ import (
 	"tahfidz-backend/model"
 	"tahfidz-backend/model/enum"
 	"tahfidz-backend/repository"
+	"time"
 )
 
 func IsNumber(parameter string) bool {
@@ -113,18 +114,23 @@ func quranMethodPass(method string) bool {
 }
 
 func ValidateQuranProgress(quranProgress *model.QuranProgress, create bool) (bool, string) {
-	if quranProgress.Juz > 0 && quranProgress.Ayat > 0 &&
-		len(quranProgress.Surat) > 0 && quranProgress.UserId > 0 &&
-		len(quranProgress.Method) > 0 && quranMethodPass(quranProgress.Method) {
+	if quranProgress.UserId > 0 && quranMethodPass(quranProgress.Method) {
 		if create {
-			return true, ""
-		} else {
-			user := repository.FetchUserById(quranProgress.UserId)
+			user := repository.FetchUserById(quranProgress.Id)
 			if &user != nil {
 				return true, ""
 			}
 
 			return false, "Data user tidak ditemukan."
+		} else {
+			if quranProgress.Id > 0 {
+				existingQuranProgress := repository.FetchQuranProgressById(quranProgress.Id)
+				if &existingQuranProgress != nil {
+					return true, ""
+				}
+			}
+
+			return false, "Data progress hapalan Al Quran tidak ditemukan atau id tidak dikenali."
 		}
 	}
 
@@ -140,10 +146,11 @@ func ValidateSubjectProgress(subjectProgress *model.SubjectProgress, create bool
 			if create {
 				return true, ""
 			} else {
-				subjectProgressExisted := repository.FetchSubjectProgressByUserIdAndSubjectId(subjectProgress.UserId,
-					subjectProgress.SubjectId)
-				if &subjectProgressExisted != nil {
-					return false, "Data subject progress sudah ada."
+				subjectProgressExisted := repository.FetchSubjectProgressByUserIdAndSubjectIdAndCreatedDate(subjectProgress.UserId,
+					subjectProgress.SubjectId, time.Now())
+
+				if &subjectProgressExisted == nil || subjectProgressExisted.Id != subjectProgress.Id {
+					return false, "Gagal mengubah data, subject progress belum ada atau id tidak dikenali."
 				}
 				return true, ""
 			}

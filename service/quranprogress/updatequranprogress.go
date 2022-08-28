@@ -30,7 +30,9 @@ func Update(context *gin.Context) {
 
 	db := context.MustGet("db").(*gorm.DB)
 
-	updateResult := db.Model(&quranProgress).Updates(model.QuranProgress{Surat: quranProgress.Surat, Ayat: quranProgress.Ayat, Juz: quranProgress.Juz})
+	updateResult := db.Model(&quranProgress).
+		Where("id = ?", quranProgress.Id).
+		Updates(model.QuranProgress{Surat: quranProgress.Surat, Ayat: quranProgress.Ayat, Juz: quranProgress.Juz})
 
 	if updateResult.Error != nil {
 		util.Response400(context, "Gagal mengubah progress hapalan.", updateResult.Error.Error())

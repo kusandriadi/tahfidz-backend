@@ -9,8 +9,9 @@ type SubjectProgress struct {
 	CreatedDate   *time.Time `json:"createdDate,omitempty" gorm:"column:createdDate"`
 	MarkForDelete bool       `json:"markForDelete,omitempty" gorm:"column:markForDelete"`
 	UserId        int        `json:"userId,omitempty" gorm:"column:userId"`
+	Name          string     `json:"name,omitempty" gorm:"->"`
 	SubjectId     int        `json:"subjectId,omitempty" gorm:"column:subjectId"`
-	Presence      bool       `json:"presence,omitempty" gorm:"column:presence"`
+	Presence      bool       `json:"presence" gorm:"column:presence"`
 }
 
 func (SubjectProgress) TableName() string {
