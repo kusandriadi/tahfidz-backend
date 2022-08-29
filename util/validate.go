@@ -116,12 +116,13 @@ func quranMethodPass(method string) bool {
 func ValidateQuranProgress(quranProgress *model.QuranProgress, create bool) (bool, string) {
 	if quranProgress.UserId > 0 && quranMethodPass(quranProgress.Method) {
 		if create {
-			user := repository.FetchUserById(quranProgress.Id)
-			if &user != nil {
+			quranProgress := repository.FetchQuranProgressByUserIdAndMethodAndCreatedDate(quranProgress.UserId,
+				quranProgress.Method, time.Now())
+			if &quranProgress == nil {
 				return true, ""
 			}
 
-			return false, "Data user tidak ditemukan."
+			return false, "Data quran progress sudah ada, tidak boleh ada duplikasi."
 		} else {
 			if quranProgress.Id > 0 {
 				existingQuranProgress := repository.FetchQuranProgressById(quranProgress.Id)
@@ -143,12 +144,15 @@ func ValidateSubjectProgress(subjectProgress *model.SubjectProgress, create bool
 		user := repository.FetchUserById(subjectProgress.UserId)
 		subject := repository.FetchSubjectById(subjectProgress.SubjectId)
 		if &user != nil && &subject != nil {
+			subjectProgressExisted := repository.FetchSubjectProgressByUserIdAndSubjectIdAndCreatedDate(subjectProgress.UserId,
+				subjectProgress.SubjectId, time.Now())
 			if create {
-				return true, ""
-			} else {
-				subjectProgressExisted := repository.FetchSubjectProgressByUserIdAndSubjectIdAndCreatedDate(subjectProgress.UserId,
-					subjectProgress.SubjectId, time.Now())
+				if &subjectProgressExisted == nil {
+					return true, ""
+				}
 
+				return false, "Data subject progress sudah ada, tidak boleh ada duplikasi."
+			} else {
 				if &subjectProgressExisted == nil || subjectProgressExisted.Id != subjectProgress.Id {
 					return false, "Gagal mengubah data, subject progress belum ada atau id tidak dikenali."
 				}

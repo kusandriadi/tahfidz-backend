@@ -107,7 +107,7 @@ func FetchQuranProgressByUserIdAndMethodAndCreatedDate(userId int, method string
 	db := service.ConnectToDatabase()
 	var quranProgress []model.QuranProgress
 
-	db.Where("userId = ? AND method = ? AND markForDelete = ? AND date(createdDate) = ?", userId, method, false, time.Now().Format("2006-01-02")).
+	db.Where("userId = ? AND method = ? AND markForDelete = ? AND date(createdDate) = ?", userId, method, false, now.Format("2006-01-02")).
 		Find(&quranProgress)
 
 	return quranProgress
