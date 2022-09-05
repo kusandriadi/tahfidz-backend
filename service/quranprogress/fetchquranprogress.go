@@ -11,7 +11,7 @@ import (
 )
 
 func FetchQuranProgress(context *gin.Context) {
-	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
+	if !auth.Auth(context, nil) {
 		return
 	}
 
@@ -19,23 +19,25 @@ func FetchQuranProgress(context *gin.Context) {
 }
 
 func FetchQuranProgressByUserId(context *gin.Context) {
-	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
+	if !auth.Auth(context, nil) {
 		return
 	}
 
 	userId := context.Param("userId")
+	limit := context.DefaultQuery("limit", "0")
 	if !util.IsNumber(userId) {
 		util.Response400(context, "", "user id harus angka")
 		return
 	}
 
 	id, _ := strconv.Atoi(userId)
+	limitI, _ := strconv.Atoi(limit)
 
-	util.Response200(context, repository.FetchQuranProgressByUserId(id), "")
+	util.Response200(context, repository.FetchQuranProgressByUserId(id, limitI), "")
 }
 
 func FetchQuranProgressByUserIdAndMethod(context *gin.Context) {
-	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
+	if !auth.Auth(context, nil) {
 		return
 	}
 
@@ -52,7 +54,7 @@ func FetchQuranProgressByUserIdAndMethod(context *gin.Context) {
 }
 
 func FetchQuranProgressByMethod(context *gin.Context) {
-	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
+	if !auth.Auth(context, nil) {
 		return
 	}
 
@@ -62,7 +64,7 @@ func FetchQuranProgressByMethod(context *gin.Context) {
 }
 
 func CountQuranProgressMethod(context *gin.Context) {
-	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
+	if !auth.Auth(context, nil) {
 		return
 	}
 
@@ -77,7 +79,7 @@ func CountQuranProgressMethod(context *gin.Context) {
 }
 
 func CurrentQuranProgress(context *gin.Context) {
-	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
+	if !auth.Auth(context, nil) {
 		return
 	}
 
@@ -92,9 +94,19 @@ func CurrentQuranProgress(context *gin.Context) {
 }
 
 func GetAllQuranProgress(context *gin.Context) {
-	if !auth.Auth(context, enum.UserRoleEnum().ADMIN) {
+	if !auth.Auth(context, []string{enum.UserRoleEnum().ADMIN, enum.UserRoleEnum().TEACHER}) {
 		return
 	}
 
 	util.Response200(context, repository.GetAllQuranProgress(), "")
+}
+
+func GetAllQuranProgressByName(context *gin.Context) {
+	if !auth.Auth(context, []string{enum.UserRoleEnum().ADMIN, enum.UserRoleEnum().TEACHER}) {
+		return
+	}
+
+	name := context.Param("name")
+
+	util.Response200(context, repository.GetAllQuranProgressByName(name), "")
 }

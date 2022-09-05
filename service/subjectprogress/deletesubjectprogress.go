@@ -6,12 +6,11 @@ import (
 	"net/http"
 	"tahfidz-backend/auth"
 	"tahfidz-backend/model"
-	"tahfidz-backend/model/enum"
 	"tahfidz-backend/util"
 )
 
 func Delete(context *gin.Context) {
-	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
+	if !auth.Auth(context, nil) {
 		return
 	}
 

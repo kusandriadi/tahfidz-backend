@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-func Auth(context *gin.Context, expectedRole string) bool {
+func Auth(context *gin.Context, expectedRoles []string) bool {
 	tokenString := context.Request.Header.Get("Authorization")
 	if len(tokenString) <= 0 {
 		util.Response(context, http.StatusBadRequest,
@@ -33,11 +33,15 @@ func Auth(context *gin.Context, expectedRole string) bool {
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		var role = claims["Role"].(string)
 		logrus.Info("Sukses login dengan username " + claims["Username"].(string) + " dan role " + role)
-		if len(expectedRole) > 0 {
-			return strings.EqualFold(expectedRole, role)
+		if len(expectedRoles) > 0 {
+			for _, expectedRole := range expectedRoles {
+				if strings.EqualFold(expectedRole, role) {
+					return true
+				}
+			}
+		} else {
+			return true
 		}
-
-		return true
 	}
 
 	util.Response(context, http.StatusUnauthorized,

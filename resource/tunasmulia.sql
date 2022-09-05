@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS user (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    createdDate DATE,
+    createdDate DATETIME,
     markForDelete BOOLEAN default false,
     name VARCHAR(255) NOT NULL,
     username VARCHAR(100),
@@ -19,7 +19,7 @@ VALUES (null, now(), 'admin', 'admin', '$2a$10$LWcLabDoYw9vt3NPnS2AD.liTuU5AGhh.
 
 CREATE TABLE IF NOT EXISTS subject (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    createdDate DATE,
+    createdDate DATETIME,
     markForDelete BOOLEAN default false,
     name VARCHAR(255) NOT NULL,
     book VARCHAR(255),
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS subject (
 
 CREATE TABLE IF NOT EXISTS quranprogress (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    createdDate DATE,
+    createdDate DATETIME,
     markForDelete BOOLEAN default false,
     surat VARCHAR(30),
     ayat int,
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS quranprogress (
 
 CREATE TABLE IF NOT EXISTS subjectprogress (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    createdDate DATE,
+    createdDate DATETIME,
     markForDelete BOOLEAN default false,
     presence BOOLEAN default false,
     subjectid int NOT NULL,

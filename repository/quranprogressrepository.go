@@ -27,11 +27,15 @@ func FetchQuranProgressById(id int) model.QuranProgress {
 	return quranProgress
 }
 
-func FetchQuranProgressByUserId(userId int) []model.QuranProgress {
+func FetchQuranProgressByUserId(userId int, limit int) []model.QuranProgress {
 	db := service.ConnectToDatabase()
 	var quranProgress []model.QuranProgress
 
-	db.Where("userId = ? AND markForDelete = ?", userId, false).Find(&quranProgress)
+	if limit == 0 {
+		db.Where("userId = ? AND markForDelete = ?", userId, false).Find(&quranProgress)
+	} else {
+		db.Where("userId = ? AND markForDelete = ? AND surat != ''", userId, false).Limit(limit).Order("id desc").Find(&quranProgress)
+	}
 
 	return quranProgress
 }
@@ -147,6 +151,18 @@ func GetAllQuranProgress() []model.AllUserQuranProgress {
 	db.Raw("SELECT quranprogress.userId as UserId, user.name as Name, COUNT(quranprogress.userId) as Total FROM quranprogress " +
 		"JOIN user ON user.id = quranprogress.userId " +
 		"WHERE quranprogress.markForDelete = false AND quranprogress.surat != '' " +
+		"GROUP BY quranprogress.userId").Scan(&allUserQuranProgress)
+
+	return allUserQuranProgress
+}
+
+func GetAllQuranProgressByName(name string) []model.AllUserQuranProgress {
+	db := service.ConnectToDatabase()
+	var allUserQuranProgress []model.AllUserQuranProgress
+
+	db.Raw("SELECT quranprogress.userId as UserId, user.name as Name, COUNT(quranprogress.userId) as Total FROM quranprogress " +
+		"JOIN user ON user.id = quranprogress.userId " +
+		"WHERE quranprogress.markForDelete = false AND quranprogress.surat != '' AND user.name like '%" + name + "%' " +
 		"GROUP BY quranprogress.userId").Scan(&allUserQuranProgress)
 
 	return allUserQuranProgress

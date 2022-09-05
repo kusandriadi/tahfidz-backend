@@ -4,13 +4,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"strconv"
 	"tahfidz-backend/auth"
-	"tahfidz-backend/model/enum"
 	"tahfidz-backend/repository"
 	"tahfidz-backend/util"
 )
 
 func FetchSubjects(context *gin.Context) {
-	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
+	if !auth.Auth(context, nil) {
 		return
 	}
 
@@ -18,7 +17,7 @@ func FetchSubjects(context *gin.Context) {
 }
 
 func FetchSubjectByType(context *gin.Context) {
-	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
+	if !auth.Auth(context, nil) {
 		return
 	}
 
@@ -28,7 +27,7 @@ func FetchSubjectByType(context *gin.Context) {
 }
 
 func FetchSubjectByName(context *gin.Context) {
-	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
+	if !auth.Auth(context, nil) {
 		return
 	}
 
@@ -38,7 +37,7 @@ func FetchSubjectByName(context *gin.Context) {
 }
 
 func FetchSubjectById(context *gin.Context) {
-	if !auth.Auth(context, enum.UserRoleEnum().EMPTY) {
+	if !auth.Auth(context, nil) {
 		return
 	}
 

@@ -94,6 +94,7 @@ func quranProgressApi(router *gin.Engine) {
 	router.GET("/api/quran-progress/user/:userId/method/count", quranprogress.CountQuranProgressMethod)
 	router.GET("/api/quran-progress/user/:userId/progress", quranprogress.CurrentQuranProgress)
 	router.GET("/api/quran-progress/user/progress", quranprogress.GetAllQuranProgress)
+	router.GET("/api/quran-progress/user/name/:name/progress", quranprogress.GetAllQuranProgressByName)
 	router.GET("/api/quran-progress/method/:method", quranprogress.FetchQuranProgressByMethod)
 
 	router.POST("/api/quran-progress", quranprogress.Create)
@@ -115,7 +116,7 @@ func subjectProgressApi(router *gin.Engine) {
 }
 
 func reportApi(router *gin.Engine) {
-	router.GET("/api/users/username/:username/report", report.FetchByUsername)
+	router.GET("/api/users/:id/report", report.FetchByUserId)
 	router.GET("/api/quran-progress/user/:userId/progress/report", report.CurrentQuranProgress)
 	router.GET("/api/quran-progress/user/:userId/method/count/report", report.CountQuranProgressMethod)
 	router.GET("/api/quran-progress/user/:userId/report", report.FetchQuranProgressByUserId)

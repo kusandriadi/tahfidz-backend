@@ -10,7 +10,7 @@ import (
 )
 
 func Update(context *gin.Context) {
-	if !auth.Auth(context, enum.UserRoleEnum().ADMIN) {
+	if !auth.Auth(context, []string{enum.UserRoleEnum().ADMIN}) {
 		return
 	}
 
