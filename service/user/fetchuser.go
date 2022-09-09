@@ -40,6 +40,17 @@ func FetchByName(context *gin.Context) {
 	util.Response200(context, repository.FetchUserByName(name), "")
 }
 
+func FetchByNameAndRole(context *gin.Context) {
+	if !auth.Auth(context, nil) {
+		return
+	}
+
+	name := context.Param("name")
+	role := context.Param("role")
+
+	util.Response200(context, repository.FetchUserByNameAndRole(name, role), "")
+}
+
 func FetchByUsername(context *gin.Context) {
 	if !auth.Auth(context, nil) {
 		return

@@ -48,6 +48,16 @@ func FetchUserByName(name string) []model.User {
 	return users
 }
 
+func FetchUserByNameAndRole(name string, role string) []model.User {
+	db := service.ConnectToDatabase()
+	var users []model.User
+
+	db.Select("id", "createdDate", "markForDelete", "name", "username", "guardian", "userPhone",
+		"guardianPhone", "birthDate", "city", "role", "lastEducation").Where("markForDelete = ? AND role = ? AND name LIKE ?", false, role, "%"+name+"%").Find(&users)
+
+	return users
+}
+
 func FetchUserByRole(role string) []model.User {
 	db := service.ConnectToDatabase()
 	var users []model.User

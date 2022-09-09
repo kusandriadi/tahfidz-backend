@@ -63,6 +63,7 @@ func userApi(router *gin.Engine) {
 	router.GET("/api/users/:id", user.FetchById)
 	router.GET("/api/users/role/:role", user.FetchByRole)
 	router.GET("/api/users/name/:name", user.FetchByName)
+	router.GET("/api/users/name/:name/role/:role", user.FetchByNameAndRole)
 	router.GET("/api/users/username/:username", user.FetchByUsername)
 	router.GET("/api/users/count", user.Count)
 
