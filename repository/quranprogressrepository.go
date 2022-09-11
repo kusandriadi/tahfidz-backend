@@ -150,7 +150,7 @@ func GetAllQuranProgress() []model.AllUserQuranProgress {
 
 	db.Raw("SELECT quranprogress.userId as UserId, user.name as Name, COUNT(quranprogress.userId) as Total FROM quranprogress " +
 		"JOIN user ON user.id = quranprogress.userId " +
-		"WHERE quranprogress.markForDelete = false AND quranprogress.surat != '' " +
+		"WHERE quranprogress.markForDelete = false AND user.role = 'STUDENT' AND quranprogress.surat != '' " +
 		"GROUP BY quranprogress.userId").Scan(&allUserQuranProgress)
 
 	return allUserQuranProgress
