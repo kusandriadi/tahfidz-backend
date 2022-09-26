@@ -30,6 +30,6 @@ func Delete(context *gin.Context) {
 		return
 	}
 
-	db.Model(&deletedQuranProgress).Update("markForDelete", false)
+	db.Model(&deletedQuranProgress).Update("markForDelete", true)
 	util.Response200(context, "", "Berhasil menghapus quran progress dengan id "+id)
 }

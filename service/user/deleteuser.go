@@ -31,6 +31,6 @@ func Delete(context *gin.Context) {
 		return
 	}
 
-	db.Model(&user).Update("markForDelete", false)
+	db.Model(&user).Update("markForDelete", true)
 	util.Response200(context, "", "Berhasil menghapus user dengan user id "+id)
 }
