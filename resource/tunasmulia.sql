@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS user (
     guardian VARCHAR(255),
     userPhone VARCHAR(16),
     guardianPhone VARCHAR(16),
+    birthPlace VARCHAR(25),
     birthDate DATE,
     city VARCHAR(25),
     role VARCHAR(15) NOT NULL,

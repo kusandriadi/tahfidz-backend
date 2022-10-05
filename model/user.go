@@ -9,6 +9,7 @@ type User struct {
 	CreatedDate   *time.Time `json:"createdDate,omitempty" gorm:"column:createdDate"`
 	MarkForDelete bool       `json:"markForDelete,omitempty" gorm:"column:markForDelete"`
 	Name          string     `json:"name,omitempty" gorm:"column:name"`
+	BirthPlace    string     `json:"birthPlace,omitempty" gorm:"column:birthPlace"`
 	Username      string     `json:"username,omitempty" gorm:"column:username"`
 	Password      string     `json:"password,omitempty" gorm:"column:password"`
 	Guardian      string     `json:"guardian,omitempty" gorm:"column:guardian"`
