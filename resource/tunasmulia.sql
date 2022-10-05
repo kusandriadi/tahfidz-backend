@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS user (
     createdDate DATETIME,
     markForDelete BOOLEAN default false,
     name VARCHAR(255) NOT NULL,
+    address VARCHAR(255),
     username VARCHAR(100),
     password VARCHAR(75),
     guardian VARCHAR(255),

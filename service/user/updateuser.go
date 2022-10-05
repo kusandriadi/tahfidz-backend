@@ -1,13 +1,14 @@
 package user
 
 import (
-	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"tahfidz-backend/auth"
 	"tahfidz-backend/model"
 	"tahfidz-backend/model/enum"
 	"tahfidz-backend/util"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 func Update(context *gin.Context) {
@@ -44,6 +45,7 @@ func Update(context *gin.Context) {
 
 	existingUser.Name = updatedUser.Name
 	existingUser.BirthPlace = updatedUser.BirthPlace
+	existingUser.Address = updatedUser.Address
 	existingUser.Password = updatedUser.Password
 	existingUser.LastEducation = updatedUser.LastEducation
 	existingUser.City = updatedUser.City

@@ -5,12 +5,13 @@ import (
 )
 
 type User struct {
-	Id            int        `json:"id,omitempty" gorm:"primary_key" gorm:"column:id"`
+	Id            int        `json:"id,omitempty" gorm:"column:id;primary_key"`
 	CreatedDate   *time.Time `json:"createdDate,omitempty" gorm:"column:createdDate"`
 	MarkForDelete bool       `json:"markForDelete,omitempty" gorm:"column:markForDelete"`
 	Name          string     `json:"name,omitempty" gorm:"column:name"`
 	BirthPlace    string     `json:"birthPlace,omitempty" gorm:"column:birthPlace"`
 	Username      string     `json:"username,omitempty" gorm:"column:username"`
+	Address       string     `json:"address,omitempty" gorm:"column:address"`
 	Password      string     `json:"password,omitempty" gorm:"column:password"`
 	Guardian      string     `json:"guardian,omitempty" gorm:"column:guardian"`
 	UserPhone     string     `json:"userPhone,omitempty" gorm:"column:userPhone"`

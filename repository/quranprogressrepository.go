@@ -1,12 +1,13 @@
 package repository
 
 import (
-	"gorm.io/gorm"
 	"strconv"
 	"tahfidz-backend/model"
 	"tahfidz-backend/model/enum"
 	"tahfidz-backend/service"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 func FetchQuranProgress() []model.QuranProgress {
@@ -121,7 +122,7 @@ func CountQuranProgressMethod(userId int) []model.QuranProgressMethodCount {
 	db := service.ConnectToDatabase()
 	var quranProgressMethod []model.QuranProgressMethodCount
 
-	db.Raw("Select Method, COUNT(Method) as total FROM quranprogress WHERE userId = " + strconv.Itoa(userId) + " GROUP BY Method").Scan(&quranProgressMethod)
+	db.Raw("Select Method, COUNT(Method) as total FROM quranprogress WHERE markForDelete = false AND userId = " + strconv.Itoa(userId) + " GROUP BY Method").Scan(&quranProgressMethod)
 
 	return quranProgressMethod
 }

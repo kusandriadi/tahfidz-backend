@@ -54,5 +54,4 @@ func Create(context *gin.Context) {
 	}
 
 	util.Response200(context, newUser, "")
-	return
 }

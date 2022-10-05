@@ -45,7 +45,7 @@ func CountSubject() []model.SubjectCount {
 	db := service.ConnectToDatabase()
 	var subjectCount []model.SubjectCount
 
-	db.Raw("Select Type, COUNT(Type) as total FROM subject GROUP BY Type").Scan(&subjectCount)
+	db.Raw("Select Type, COUNT(Type) as total FROM subject WHERE markForDelete = false GROUP BY Type").Scan(&subjectCount)
 
 	return subjectCount
 }
