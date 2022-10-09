@@ -44,6 +44,7 @@ func Update(context *gin.Context) {
 	}
 
 	existingUser.Name = updatedUser.Name
+	existingUser.BirthPlace = updatedUser.BirthPlace
 	existingUser.Address = updatedUser.Address
 	existingUser.Password = updatedUser.Password
 	existingUser.LastEducation = updatedUser.LastEducation
@@ -61,4 +62,5 @@ func Update(context *gin.Context) {
 	}
 
 	util.Response200(context, updatedUser, "")
+	return
 }

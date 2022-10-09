@@ -58,8 +58,7 @@ func ValidateUser(user *model.User) (bool, string) {
 	}
 
 	if strings.EqualFold("STUDENT", user.Role) {
-		if len(user.Name) > 0 && len(user.UserPhone) > 0 && len(user.Guardian) > 0 && len(user.GuardianPhone) > 0 &&
-			&user.BirthDate != nil && len(user.City) > 0 {
+		if len(user.Name) > 0 && len(user.UserPhone) > 0 && len(user.Guardian) > 0 && len(user.GuardianPhone) > 0 && len(user.City) > 0 {
 			return true, ""
 		} else {
 			return false, "nama, nomor handphone, wali, nomor handphone wali, tanggal lahir dan kota asal harus di isi."

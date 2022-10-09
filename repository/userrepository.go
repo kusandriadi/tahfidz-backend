@@ -10,7 +10,7 @@ func FetchUsers() []model.User {
 	var users []model.User
 
 	db.Select("id", "createdDate", "markForDelete", "name", "address", "username", "guardian", "userPhone",
-		"guardianPhone", "birthDate", "city", "role", "lastEducation").Where("markForDelete = ?", false).Find(&users)
+		"guardianPhone", "birthDate", "birthPlace", "city", "role", "lastEducation").Where("markForDelete = ?", false).Find(&users)
 
 	return users
 }
@@ -23,7 +23,7 @@ func FetchUserByUsername(username string, login bool) model.User {
 		db.Where("username = ? AND markForDelete = ?", username, false).Find(&user)
 	} else {
 		db.Select("id", "createdDate", "markForDelete", "name", "address", "username", "guardian", "userPhone",
-			"guardianPhone", "birthDate", "city", "role", "lastEducation").Where("username = ? AND markForDelete = ?", username, false).Find(&user)
+			"guardianPhone", "birthDate", "birthPlace", "city", "role", "lastEducation").Where("username = ? AND markForDelete = ?", username, false).Find(&user)
 	}
 	return user
 }
@@ -33,7 +33,7 @@ func FetchUserById(id int) model.User {
 	var user model.User
 
 	db.Select("id", "createdDate", "markForDelete", "name", "address", "username", "guardian", "userPhone",
-		"guardianPhone", "birthDate", "city", "role", "lastEducation").Find(&user, id)
+		"guardianPhone", "birthDate", "birthPlace", "city", "role", "lastEducation").Find(&user, id)
 
 	return user
 }
@@ -43,7 +43,7 @@ func FetchUserByName(name string) []model.User {
 	var users []model.User
 
 	db.Select("id", "createdDate", "markForDelete", "name", "address", "username", "guardian", "userPhone",
-		"guardianPhone", "birthDate", "city", "role", "lastEducation").Where("markForDelete = ? AND name LIKE ?", false, "%"+name+"%").Find(&users)
+		"guardianPhone", "birthDate", "birthPlace", "city", "role", "lastEducation").Where("markForDelete = ? AND name LIKE ?", false, "%"+name+"%").Find(&users)
 
 	return users
 }
@@ -53,7 +53,7 @@ func FetchUserByNameAndRole(name string, role string) []model.User {
 	var users []model.User
 
 	db.Select("id", "createdDate", "markForDelete", "name", "address", "username", "guardian", "userPhone",
-		"guardianPhone", "birthDate", "city", "role", "lastEducation").Where("markForDelete = ? AND role = ? AND name LIKE ?", false, role, "%"+name+"%").Find(&users)
+		"guardianPhone", "birthDate", "birthPlace", "city", "role", "lastEducation").Where("markForDelete = ? AND role = ? AND name LIKE ?", false, role, "%"+name+"%").Find(&users)
 
 	return users
 }
@@ -63,7 +63,7 @@ func FetchUserByRole(role string) []model.User {
 	var users []model.User
 
 	db.Select("id", "createdDate", "markForDelete", "name", "address", "username", "guardian", "userPhone",
-		"guardianPhone", "birthDate", "city", "role", "lastEducation").Where("role = ? AND markForDelete = ?", role, false).Find(&users)
+		"guardianPhone", "birthDate", "birthPlace", "city", "role", "lastEducation").Where("role = ? AND markForDelete = ?", role, false).Find(&users)
 
 	return users
 }
