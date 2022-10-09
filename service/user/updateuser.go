@@ -38,9 +38,9 @@ func Update(context *gin.Context) {
 		return
 	}
 
-	if updatedUser.BirthDate != nil {
-		var formattedDate, _ = time.Parse("02-01-2006", updatedUser.BirthDate.Format("02-01-2006"))
-		existingUser.BirthDate = &formattedDate
+	if len(updatedUser.UserBirthDate) > 0 {
+		var formattedDate, _ = time.Parse("02-01-2006", updatedUser.UserBirthDate)
+		updatedUser.BirthDate = &formattedDate
 	}
 
 	existingUser.Name = updatedUser.Name

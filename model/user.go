@@ -16,6 +16,7 @@ type User struct {
 	UserPhone     string     `json:"userPhone,omitempty" gorm:"column:userPhone"`
 	GuardianPhone string     `json:"guardianPhone,omitempty" gorm:"column:guardianPhone"`
 	BirthDate     *time.Time `json:"birthDate,omitempty" gorm:"column:birthDate"`
+	UserBirthDate string     `json:"userBirthDate,omitempty" gorm:"->"`
 	City          string     `json:"city,omitempty" gorm:"column:city"`
 	Role          string     `json:"role,omitempty" gorm:"column:role"`
 	LastEducation string     `json:"lastEducation,omitempty" gorm:"column:lastEducation"`
