@@ -1,11 +1,12 @@
 package user
 
 import (
-	"github.com/gin-gonic/gin"
 	"strconv"
 	"tahfidz-backend/auth"
 	"tahfidz-backend/repository"
 	"tahfidz-backend/util"
+
+	"github.com/gin-gonic/gin"
 )
 
 func FetchAll(context *gin.Context) {
