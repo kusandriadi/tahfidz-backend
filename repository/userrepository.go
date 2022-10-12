@@ -78,8 +78,8 @@ func CountUser() []model.UserCount {
 }
 
 func constructStructs(users []model.User) []model.User {
-	for _, u := range users {
-		constructUser(u)
+	for index, u := range users {
+		users[index] = constructUser(u)
 	}
 
 	return users
