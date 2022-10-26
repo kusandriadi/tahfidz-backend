@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS user (
     birthDate DATE,
     city VARCHAR(25),
     role VARCHAR(15) NOT NULL,
-    lastEducation VARCHAR(255)
+    lastEducation VARCHAR(255),
+    grade VARCHAR(100)
 );
 
 INSERT INTO user (id, createdDate, name, username, password, role)

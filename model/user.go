@@ -21,6 +21,7 @@ type User struct {
 	City          string     `json:"city,omitempty" gorm:"column:city"`
 	Role          string     `json:"role,omitempty" gorm:"column:role"`
 	LastEducation string     `json:"lastEducation,omitempty" gorm:"column:lastEducation"`
+	Grade         string     `json:"grade,omitempty" gorm:"column:grade"`
 }
 
 type UserCount struct {

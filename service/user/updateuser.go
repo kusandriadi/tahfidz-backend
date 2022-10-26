@@ -48,6 +48,7 @@ func Update(context *gin.Context) {
 	existingUser.Address = updatedUser.Address
 	existingUser.Password = updatedUser.Password
 	existingUser.LastEducation = updatedUser.LastEducation
+	existingUser.Grade = updatedUser.Grade
 	existingUser.City = updatedUser.City
 	existingUser.Guardian = updatedUser.Guardian
 	existingUser.Role = updatedUser.Role
